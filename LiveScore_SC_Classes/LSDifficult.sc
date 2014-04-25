@@ -16,12 +16,12 @@ LSDifficult : LiveScore
 	var <>durationCenter;
 	var <>durationWidth;
 	var <>dynamic;
-	
+
 	var <>fields;
 	var <>min;
-	
-	
-		
+
+
+
 	init
 	{
 		super.init;
@@ -41,14 +41,14 @@ LSDifficult : LiveScore
 
 		stasis=0.5;
 		noteMulti=2;
-		
+
 		//init MIDI input
 		MIDIClient.init(2,2);
-		2.do({ arg i; 
+		2.do({ arg i;
 			MIDIIn.connect(i, MIDIClient.sources.at(i));
 		});
 		this.startMIDI;
-		
+
 		fields=Array.new;
 		this.initClients;
 	}
@@ -88,14 +88,14 @@ LSDifficult : LiveScore
 				window=this.centerWidth(densityCenter,densityWidth);
 				onsets=Array.fill(clients.size, { rrand(0.0, window * togetherness).round(quantize); });
 				durations=Array.fill(clients.size, { this.centerWidth(durationCenter, durationWidth); });
-				
+
 				pitches=LSInstrument.voicing(fields.at(rand(fields.size)),clients);
 				postln(onsets);
 				onsets.do(
 				{
 					arg onset, idx;
 					var dyn=0;
-					
+
 					if(dynamic.at(idx) != currentDynamic.at(idx),
 					{
 						currentDynamic.put(idx,dynamic.at(idx));
@@ -111,7 +111,7 @@ LSDifficult : LiveScore
 //								clients.at(idx).addr.sendMsg("/score/notate","time",
 //								SystemClock.seconds - startTime,"duration",durations.at(idx),"pitch",pitches.at(idx) +
 //									clients.at(idx).transposition,"dynamic",dyn);
-									
+
 								clients.at(idx).addr.sendMsg("/livescore",\cmd,\notate,"time",
 								SystemClock.seconds - startTime + 6,"duration",durations.at(idx),"pitch",pitches.at(idx) +
 									clients.at(idx).transposition,"dynamic",dyn);
@@ -119,9 +119,9 @@ LSDifficult : LiveScore
 					});
 				});
 				wait(window);
-				
-			});				
-			
+
+			});
+
 		});
 	}
 
@@ -131,7 +131,7 @@ LSDifficult : LiveScore
 
 		super.start;
 		//should have multiple threads, instead of sticking this here
-		
+
 		clients.do(
 			{
 				arg aClient;
@@ -155,7 +155,7 @@ LSDifficult : LiveScore
 					aClient.addr.sendMsg("/livescore",\cmd,\conductor,\time,SystemClock.seconds - startTime - lag);
 				});
 			});
-		
+
 			while({ stopping == 0 },
 			{
 				clients.do(
@@ -168,7 +168,7 @@ LSDifficult : LiveScore
 					});
 				});
 			});
-			
+
 		}).play;
 
 	}
@@ -184,7 +184,7 @@ LSDifficult : LiveScore
 			});
 		});
 	}
-	
+
 	centerWidth
 	{
 		arg center, width;
@@ -202,12 +202,12 @@ LSDifficult : LiveScore
 	startMIDI
 	{
 	postln("midi started");
-		MIDIIn.control = 
+		MIDIIn.control =
 		{
 			arg src,chan,ctrl,value;
-			
+
 			postln([src,chan,ctrl,value]);
-	
+
 			if(ctrl == 81, { this.procDensityCenter(value); });
 			if(ctrl == 82, { this.procDensityWidth(value); });
 			if(ctrl == 83, { this.procFieldSize(value); });
@@ -226,7 +226,7 @@ LSDifficult : LiveScore
 			if(ctrl == 96, { this.procDynamic(4, value); });
 			if(ctrl == 97, { this.procDynamic(5, value); });
 			if(ctrl == 98, { this.procDynamic(6, value); });
-			if(ctrl == 92, { this.procDynamic(7, value); });
+			//if(ctrl == 92, { this.procDynamic(7, value); });
 			//if(ctrl == 93, { this.procDynamic(8, value); });
 			//if(ctrl == 94, { this.procDynamic(9, value); });
 
@@ -299,7 +299,7 @@ LSDifficult : LiveScore
 		arg voice, value;
 
 		var dyn;
-		
+
 		dyn=(value/127 * 6).trunc.asInteger + 1;
 		dynamic.put(voice,dyn);
 	}
