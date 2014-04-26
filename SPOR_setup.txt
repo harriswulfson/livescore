@@ -1,0 +1,59 @@
+
+On the master computer:
+
+Make sure SuperCollider is installed.
+
+Download and unzip this zip file: https://github.com/harriswulfson/livescore/archive/master.zip
+
+Copy the folder LiveScore_SC_Classes into /Applications/SuperCollider/SuperCollider.app/Contents/Resources/SCClassLibrary. You might have to right click on SuperCollider.app and select "Show package contents" to see the "Contents" folder.
+
+Double click on livescore_server_SPOR.scd to open it in SuperCollider.
+
+
+On each client computer:
+
+    Make sure the client computer is connected to the same wifi network as the master computer.
+
+    Download and unzip this zip file: https://github.com/harriswulfson/livescore/archive/master.zip
+
+    Double click livescore_client.jar to open the notation client.
+
+    A window should come up with a music notation staff on it. Find the IP address (eg, 192.168.1.2) displayed in that window. This needs to be entered into the master computer as follows:
+
+    In SuperCollider, find the section of livescore_server_SPOR.scd that assigns the IP addresses at the top of the page. Copy the IP address that shows up in the client over to the value of the instrument you want to use this computer. For example, if you are setting up the client for the violin, put the IP address in the double quotes in violinIP = "160.39.220.141"
+
+Go back to the master computer. In SuperCollider, find the lines:
+
+    l = LSDifficult.new;
+    l = LSDifficult.new;
+
+Highlight these two lines and press cmd-enter.
+
+Then highlight all of this block:
+
+l.addClient(LSClient.forName("Violin 1"));
+l.clients.at(0).connect(violinIP, 57110);
+l.clients.at(0).addr.sendMsg("/livescore", \cmd, \clear, \clef, l.clients.at(2).clef);
+
+l.addClient(LSClient.forName("Clarinet"));
+l.clients.at(1).connect(clarinetIP, 57110);
+l.clients.at(1).addr.sendMsg("/livescore", \cmd, \clear, \clef, l.clients.at(2).clef);
+
+l.addClient(LSClient.forName("Cello 1"));
+l.clients.at(2).connect(celloIP, 57110);
+l.clients.at(2).addr.sendMsg("/livescore", \cmd, \clear, \clef, l.clients.at(2).clef);
+
+l.addClient(LSClient.forName("Piano 1"));
+l.clients.at(3).connect(pianoIP, 57110);
+l.clients.at(3).addr.sendMsg("/livescore", \cmd, \clear, \clef, l.clients.at(2).clef);
+
+and press cmd-click.
+
+
+Then highlight:
+
+    l.start;
+
+and cmd-click.
+
+Notes should start showing up in all the clients.

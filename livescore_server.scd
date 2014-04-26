@@ -9,20 +9,20 @@ l=LSDifficult.new;
 
 
 l.addClient(LSClient.forName("Violin 1"));
-l.clients.at(0).connect("192.168.1.102",57110);
+l.clients.at(0).connect("160.39.220.141",57110);
 l.clients.at(0).addr.sendMsg("/livescore",\cmd,\clear,\clef,l.clients.at(2).clef);
 
 l.addClient(LSClient.forName("Clarinet"));
-l.clients.at(1).connect("192.168.1.102",57110);
+l.clients.at(1).connect("209.2.216.34",57110);
 l.clients.at(1).addr.sendMsg("/livescore",\cmd,\clear,\clef,l.clients.at(2).clef);
-
-l.addClient(LSClient.forName("Cello 1"));
-l.clients.at(2).connect("192.168.1.102",57110);
-l.clients.at(2).addr.sendMsg("/livescore",\cmd,\clear,\clef,l.clients.at(2).clef);
-
-l.addClient(LSClient.forName("Piano 1"));
-l.clients.at(3).connect("192.168.1.102",57110);
-l.clients.at(3).addr.sendMsg("/livescore",\cmd,\clear,\clef,l.clients.at(2).clef);
+//
+// l.addClient(LSClient.forName("Cello 1"));
+// l.clients.at(2).connect("192.168.1.102",57110);
+// l.clients.at(2).addr.sendMsg("/livescore",\cmd,\clear,\clef,l.clients.at(2).clef);
+//
+// l.addClient(LSClient.forName("Piano 1"));
+// l.clients.at(3).connect("192.168.1.102",57110);
+// l.clients.at(3).addr.sendMsg("/livescore",\cmd,\clear,\clef,l.clients.at(2).clef);
 
 
 
