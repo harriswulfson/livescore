@@ -1,9 +1,9 @@
 // ************************************
 // Enter in IP addresses from musicians' clients here
-violinIP = "160.39.220.141"
-clarinetIP = "160.39.220.141"
-celloIP = "160.39.220.141"
-pianoIP = "160.39.220.141"
+violinIP = "160.39.220.141";
+clarinetIP = "160.39.220.141";
+celloIP = "160.39.220.141";
+pianoIP = "160.39.220.141";
 // ************************************
 
 
